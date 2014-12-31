@@ -46,4 +46,36 @@
     }
     return true;
   };
+
+  // 1.2
+  var reverseString = function (str) {
+    // Time Complexity: O(n)
+    // Space Complexity: O(n)
+
+    var len    = str.length;
+    var result = '';
+    var i;
+
+    for (i = len - 1; i >= 0; i -= 1) {
+      result += str[i];
+    }
+    return result;
+
+    // Below code would be possible if strings were mutable in JavaScript
+    // var len   = str.length;
+    // var start = 0;
+    // var end   = len - 1;
+    // var temp;
+
+    // while (start <= end) {
+    //   // swap
+    //   temp       = str[start];
+    //   str[start] = str[end];
+    //   str[end]   = temp;
+
+    //   start += 1;
+    //   end   -= 1;
+    // }
+    // return str;
+  };
 })();
