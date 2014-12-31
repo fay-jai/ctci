@@ -176,4 +176,38 @@
 
     return result;
   };
+
+  // 1.6 - in place solution
+  rotateClockwise90Degrees = function (matrix) {
+
+  };
+
+  // 1.7
+  var blankOut = function (matrix) {
+    var rows = matrix.length;
+    var cols = matrix[0].length;
+    var rowsWithZero = {};
+    var colsWithZero = {};
+    var i, j;
+
+    // populate rowsWithZero and colsWithZero
+    for (i = 0; i < rows; i += 1) {
+      for (j = 0; j < cols; j += 1) {
+        if ( matrix[i][j] === 0 ) {
+          rowsWithZero[i] = true;
+          colsWithZero[j] = true;
+        }
+      }
+    }
+
+    for (i = 0; i < rows; i += 1) {
+      for (j = 0; j < cols; j += 1) {
+        if ( rowsWithZero[i] || colsWithZero[j] ) {
+          matrix[i][j] = 0;
+        }
+      }
+    }
+
+    return matrix;
+  };
 })();
