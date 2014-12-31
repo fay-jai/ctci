@@ -156,4 +156,24 @@
 
     return (result.length >= len ? str : result);
   };
+
+  // 1.6 - non in place solution
+  var rotateClockwise90Degrees = function (matrix) {
+    // assume matrix is N x N
+    var n      = matrix.length;
+    var result = [];
+    var i, j, k;
+
+    for (k = 0; k < n; k += 1) {
+      result.push( [] );
+    }
+
+    for (i = 0; i < n; i += 1) {
+      for (j = 0; j < n; j += 1) {
+        result[i][j] = matrix[n - j - 1][i];
+      }
+    }
+
+    return result;
+  };
 })();
