@@ -78,4 +78,46 @@
     // }
     // return str;
   };
+
+  // 1.3
+  var isPermutation = function (str1, str2) {
+    // Create hash for str1, where key is character and value is number of times character appears
+    // Loop through each character in str2
+      // If character doesn't appear in hash, return false
+      // Else decrement value in hash by 1
+    // Loop through hash and check if all values are 0
+      // If no, return false
+    // Reaching here means to return true
+    // Time Complexity: O(n)
+
+    var hash = {};
+    var s2Len = str2.length;
+    var i, prop;
+
+    // Build hash
+    str1.split('').forEach(function (character) {
+      if ( hash[character] ) {
+        hash[character] += 1;
+      } else {
+        hash[character] = 1;
+      }
+    });
+
+    for (i = 0; i < s2Len; i += 1) {
+      if ( hash[ str2[i] ] ) {
+        hash[ str2[i] ] -= 1;
+      } else {
+        return false;
+      }
+    }
+
+    // All values in hash should be 0 if strings are permutations of each other
+    for (prop in hash) {
+      if ( hash[prop] !== 0) {
+        return false;
+      }
+    }
+
+    return true;
+  };
 })();
