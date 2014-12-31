@@ -28,6 +28,22 @@
 
   // 1.1 - Without use of additional data structure
   uniqueCharacters = function (str) {
+    // Set up outer loop to loop through each character of str, starting at i
+      // Set up inner loop to loop through each character of str, starting at i + 1
+        // If str[i] is equal to str[i + 1], then return false
+    // Reaching here implies all characters are unique; return true
+    // Time Complexity: O(n^2)
 
+    var len = str.length;
+    var i, j;
+
+    for (i = 0; i < len; i += 1) {
+      for (j = i + 1; j < len; j += 1) {
+        if ( str[i] === str[j] ) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 })();
