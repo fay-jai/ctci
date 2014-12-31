@@ -233,4 +233,18 @@
 
     return inner( str1, str2, 0 );
   };
+
+  // Improved implementation of 1.8
+  isRotation = function (str1, str2) {
+    var len1 = str1.length;
+    var len2 = str2.length;
+
+    if ( len1 !== len2 ) {
+      return false;
+    }
+
+    // The key here is that if str2 is a rotation of str1, then concatenating
+    // str2 twice must have str1 as a substring within it.
+    return (str2 + str2).indexOf(str1) !== -1;
+  };
 })();
