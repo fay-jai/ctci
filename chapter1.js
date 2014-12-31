@@ -119,6 +119,7 @@
 
   // 1.4
   var replaceInString = function (charToReplace, replaceWith, str) {
+    // Time Complexity: O(n)
     var len    = str.length;
     var result = '';
 
@@ -130,4 +131,29 @@
   };
 
   var bound = replaceInString.bind(null, ' ', '%20');
+
+  // 1.5
+  var stringCompression = function (str) {
+    // Time Complexity: O(n)
+    var len = str.length;
+    if ( len < 2 ) { return str; }
+
+    var result           = '';
+    var currentChar      = str[0];
+    var currentCharCount = 1;
+    var resultLen, i;
+
+    for (i = 1; i < len; i += 1) {
+      if ( str[i] === currentChar ) {
+        currentCharCount += 1;
+      } else {
+        result += currentChar + currentCharCount;
+        currentChar      = str[i];
+        currentCharCount = 1;
+      }
+    }
+    result += currentChar + currentCharCount;
+
+    return (result.length >= len ? str : result);
+  };
 })();
