@@ -116,4 +116,18 @@
 
     return true;
   };
+
+  // 1.4
+  var replaceInString = function (charToReplace, replaceWith, str) {
+    var len    = str.length;
+    var result = '';
+
+    str.split('').forEach(function (character) {
+      result += (character === charToReplace ? replaceWith : character);
+    });
+
+    return result;
+  };
+
+  var bound = replaceInString.bind(null, ' ', '%20');
 })();
