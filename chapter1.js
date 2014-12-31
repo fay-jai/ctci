@@ -1,8 +1,4 @@
-(function questions () {
-  /*
-   * Chapter 1
-  */
-
+(function chapter1 () {
   // 1.1 - With use of hash data structure
   var uniqueCharacters = function (str) {
     // Create a hash table
