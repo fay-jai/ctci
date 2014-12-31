@@ -190,7 +190,7 @@
     var colsWithZero = {};
     var i, j;
 
-    // populate rowsWithZero and colsWithZero
+    // The idea here is to create a hash with rowsWithZero and colsWithZero
     for (i = 0; i < rows; i += 1) {
       for (j = 0; j < cols; j += 1) {
         if ( matrix[i][j] === 0 ) {
@@ -209,5 +209,28 @@
     }
 
     return matrix;
+  };
+
+  // 1.8
+  var isRotation = function (str1, str2) {
+    var len1 = str1.length;
+    var len2 = str2.length;
+
+    if ( len1 !== len2 ) {
+      return false;
+    }
+
+    var inner = function (str1, str2, count) {
+      if ( count >= len1 ) {
+        return false;
+      } else if ( str1 === str2 ) {
+        return true;
+      } else {
+        count += 1;
+        return inner( str1, str2.slice(1) + str2.slice(0, 1), count );
+      }
+    };
+
+    return inner( str1, str2, 0 );
   };
 })();
