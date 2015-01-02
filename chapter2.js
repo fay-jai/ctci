@@ -117,4 +117,30 @@
 
     return newLinkedList;
   };
+
+  // 2.1 - version 2
+  var removeDuplicates2 = function (linkedList) {
+    // Time Complexity: O(n)
+    // Space Complexity: O(1)
+
+    // empty or 1 node in linked list
+    if ( linkedList.isEmpty() || linkedList.head === linkedList.tail ) return linkedList;
+
+    // at least 2 nodes in linked list
+    var hash     = {};
+    var previous = linkedList.head;
+    var current  = linkedList.head.next;
+    // add initial value into hash
+    hash[ previous.value ] = true;
+
+    while ( current !== null ) {
+      if ( hash[ current.value ] ) {
+        previous.next = current.next;
+      } else {
+        hash[ current.value ] = true;
+        previous = previous.next;
+      }
+      current  = current.next;
+    }
+  };
 })();
