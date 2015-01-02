@@ -277,4 +277,28 @@
 
     return newLinkedList;
   };
+
+  // 2.5 - version1 (digits are stored in reverse order)
+  var sumLinkedLists1 = function (firstList, secondList) {
+    if ( firstList.isEmpty() && secondList.isEmpty() ) return 0;
+    if ( firstList.isEmpty() ) return sumLinkList( secondList );
+    if ( secondList.isEmpty() ) return sumLinkList( firstList );
+    return sumLinkList( firstList ) + sumLinkList( secondList );
+  };
+
+  var sumLinkList = function (list) {
+    var result = [];
+    var base   = 1;
+    var node   = list.head;
+
+    while ( node !== null ) {
+      result.push( node.value * base );
+      base *= 10;
+      node = node.next;
+    }
+
+    return result.reduce(function (acc, cur) {
+      return acc + cur;
+    });
+  };
 })();
