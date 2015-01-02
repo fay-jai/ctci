@@ -92,4 +92,29 @@
   };
 
 
+  // 2.1 - version 1
+  var removeDuplicates1 = function (linkedList) {
+    // Time Complexity: O(n) b/c you have to iterate through entire linked list
+    // Space Complexity: O(n) b/c you have to build a new linked list of the same size
+
+    var hash = {};
+    var newLinkedList = singlyLinkedList();
+    var nodeValue;
+
+    // check if linked list is empty
+    if ( linkedList.isEmpty() ) return linkedList;
+
+    // continue repeating this while linkedList is not empty
+    while ( !linkedList.isEmpty() ) {
+      // remove head from linkedList and check if its value is in hash
+      nodeValue = linkedList.removeFromHead();
+      // if no, add value to hash and add value to newLinkedList
+      if ( !hash[nodeValue] ) {
+        hash[nodeValue] = true;
+        newLinkedList.appendToTail( nodeValue );
+      }
+    }
+
+    return newLinkedList;
+  };
 })();
