@@ -195,4 +195,31 @@
   };
 
   // 2.3
+  var removeNode = function (linkedList, nodeValueToRemove) {
+    var startNode;
+
+    var inner = function (previousNode) {
+      // base case - check if current node is null
+      if ( previousNode.next === null ) return;
+
+      // check if current node is the node to remove
+      if ( previousNode.next.value === nodeValueToRemove ) {
+        // check if current node is the tail node
+        previousNode.next.next === null ?
+          linkedList.removeFromTail() : previousNode.next = previousNode.next.next;
+      } else {
+        inner( previousNode.next );
+      }
+    };
+
+    if ( !linkedList.isEmpty() ) {
+      startNode = linkedList.head;
+
+      // check first node
+      startNode.value === nodeValueToRemove ?
+        linkedList.removeFromHead() : inner( startNode );
+    }
+
+    return linkedList;
+  };
 })();
