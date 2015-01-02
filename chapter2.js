@@ -222,4 +222,59 @@
 
     return linkedList;
   };
+
+  // 2.4
+  var partitionLinkedList = function (linkedList, value) {
+    // linked list is empty
+    if ( linkedList.isEmpty() ) {
+      return linkedList;
+    }
+
+    // linked list is not empty
+    var newLinkedList = singlyLinkedList();
+    var node = linkedList.head;
+
+    var head, headIterator,
+        tail, tailIterator,
+        tempNode;
+
+    while ( node !== null ) {
+      tempNode = makeNode( node.value );
+
+      if ( node.value <= value ) {
+        if ( head ) {
+          headIterator.next = tempNode;
+        } else {
+          head = tempNode;
+        }
+        headIterator = tempNode;
+      } else {
+        if ( tail ) {
+          tailIterator.next = tempNode;
+        } else {
+          tail = tempNode;
+        }
+        tailIterator = tempNode;
+      }
+      node = node.next;
+    }
+
+    if ( tail === void 0 ) {
+      // there is no tail component (i.e. all values were less than or equal to pivot)
+      newLinkedList.head = head;
+      newLinkedList.tail = headIterator;
+    } else if ( head === void 0 ) {
+      // there is no head component (i.e. all values were greater than pivot)
+      newLinkedList.head = tail;
+      newLinkedList.tail = tailIterator;
+    } else {
+      // there is both a head and tail component
+      // link the two subsections together
+      headIterator.next = tail;
+      newLinkedList.head = head;
+      newLinkedList.tail = tailIterator;
+    }
+
+    return newLinkedList;
+  };
 })();
