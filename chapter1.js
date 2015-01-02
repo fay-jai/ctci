@@ -1,4 +1,8 @@
 (function chapter1 () {
+  /*
+   * Chapter 1: Arrays, Strings and Hash Tables
+  */
+
   // 1.1 - With use of hash data structure
   var uniqueCharacters = function (str) {
     // Create a hash table
