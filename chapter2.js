@@ -20,6 +20,7 @@
         node.next = this.head;
         this.head = node;
       }
+      // this._size += 1;
     },
     appendToTail: function (value) {
       var node = makeNode( value );
@@ -30,6 +31,7 @@
         this.tail.next = node;
         this.tail      = node;
       }
+      // this._size += 1;
     },
     removeFromHead: function () {
       var remove;
@@ -43,6 +45,8 @@
         } else {
           this.head = this.head.next;
         }
+
+        // this._size -= 1;
 
         return remove;
       }
@@ -66,6 +70,8 @@
           this.tail = node;
         }
 
+        // this._size -= 1;
+
         return remove;
       }
     },
@@ -81,12 +87,17 @@
     isEmpty: function () {
       return this.head === null && this.tail === null;
     }
+    // ,
+    // getSize: function () {
+    //   return this._size;
+    // }
   };
 
   var singlyLinkedList = function () {
-    var list  = Object.create( singlyLinkedListMethods );
-    list.head = null;
-    list.tail = null;
+    var list   = Object.create( singlyLinkedListMethods );
+    list.head  = null;
+    list.tail  = null;
+    // list._size = 0;
 
     return list;
   };
@@ -143,4 +154,45 @@
       current  = current.next;
     }
   };
+
+  // 2.2
+  var kthToLast1 = function (linkedList, k) {
+    // Time Complexity: O(n) where n is size of linked list
+    // Implementation requires the use of storing the size of a linked list
+
+    var size = linkedList.getSize();
+    var i, node;
+
+    if ( k <= 0 ) throw new Error('k must be a positive integer');
+    if ( k >= size ) return linkedList.head;
+
+    i    = 0;
+    node = linkedList.head;
+    // k < size && k > 0
+    while ( i < (size - k) ) {
+      node = node.next;
+      i += 1;
+    }
+
+    return node;
+  };
+
+  // 2.2 - alternative recursive solution
+  var kthToLast2 = function (node, kth) {
+    var inner = function (n, k, counter) {
+      // base case
+      if ( n === null ) return counter + 1;
+
+      counter = inner(n.next, k, counter);
+      if ( k === counter ) {
+        console.log('n value: ', n.value);
+      }
+
+      return counter + 1;
+    };
+
+    inner(node, kth, 0);
+  };
+
+  // 2.3
 })();
