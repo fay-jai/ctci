@@ -1,6 +1,6 @@
 (function chapter3 () {
   /*
-   * Chapter 2: Stacks and Queues
+   * Chapter 3: Stacks and Queues
   */
 
 })();
