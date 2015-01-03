@@ -301,4 +301,52 @@
       return acc + cur;
     });
   };
+
+  // 2.6
+  /*
+   * Assume that the loop portion has m nodes and the non-loop portion has
+   * n nodes. Therefore, in total there are m + n nodes. Assume 1 runner
+   * traverses 1 node at a time while another traverses 2 nodes at a time.
+   * Therefore, when the 1-runner has gone m - n nodes in the loop, the 2-runner
+   * has gone 2 * (m - n) % m.
+  */
+
+  /*
+   * One possible solution is to create a hash of the values that have
+   * been encountered already. Loop through the nodes and check whether
+   * the node's value appears in the hash. The first time that its value
+   * appears in the hash already is the beginning of the circular linked
+   * list.
+  */
+
+  // Another solution using 'breadcrumbs'
+  var returnBeginningOfLoop = function (circularLinkedList) {
+    // assuming circular linked list, which means there is no terminating node
+    var start = circularLinkedList.head;
+    var result;
+
+    // add breadcrumbs
+    while ( true ) {
+      if ( start.breadcrumbs ) {
+        result = start;
+        break;
+      }
+
+      start.breadcrumbs = true;
+      start = start.next;
+    }
+
+    // remove breadcrumbs
+    start = circularLinkedList.head;
+    while ( true ) {
+      if ( !start.breadcrumbs ) {
+        break;
+      } else {
+        delete start.breadcrumbs;
+        start = start.next;
+      }
+    }
+
+    return result;
+  };
 })();
