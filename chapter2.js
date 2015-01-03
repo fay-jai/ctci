@@ -349,4 +349,25 @@
 
     return result;
   };
+
+  // 2.7
+  var isPalindrome = function (linkedList) {
+    var values = [];
+    var node = linkedList.head;
+
+    while ( node !== null ) {
+      values.push( node.value );
+      node = node.next;
+    }
+
+    return isPalindromeArray( values );
+  };
+
+  var isPalindromeArray = function (array) {
+    var len = array.length;
+
+    if ( len < 2 ) return true;
+    if ( array.shift() !== array.pop() ) return false;
+    return isPalindromeArray( array );
+  };
 })();
