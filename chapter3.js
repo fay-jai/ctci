@@ -32,9 +32,34 @@
     }
   };
 
-  var queue = function () {
-    var q = {};
+  var Queue = function () {
+    var q     = Object.create( queueMethods );
+    q.storage = {};
+    q.start   = 0;
+    q.end     = 0;
 
     return q;
+  };
+
+  var queueMethods = {
+    enqueue: function (value) {
+      this.storage[ this.end ] = value;
+      this.end += 1;
+    },
+    dequeue: function () {
+      var removed;
+      if ( !this.isEmpty() ) {
+        removed = this.storage[ this.start ];
+        delete this.storage[ this.start ];
+        this.start += 1;
+        return removed;
+      }
+    },
+    top: function () {
+      return this.storage[ this.start ];
+    },
+    isEmpty: function () {
+      return this.start >= this.end;
+    }
   };
 })();
