@@ -263,4 +263,35 @@
 
     return q;
   };
+
+  // 3.6
+  var sortStack = function (stack) {
+    var result = Stack();
+    var temp   = Stack();
+    var currentValue;
+
+    while ( !stack.isEmpty() ) {
+      // pop off from stack (value) and check if result is empty
+      currentValue = stack.pop();
+
+      if ( result.isEmpty() ) {
+        result.push( currentValue );
+      } else {
+        // take all values in result that are greater than current value and move them to temp
+        while ( result.peek() > currentValue ) {
+          temp.push( result.pop() );
+        }
+
+        // at this point, result.peek() is <= currentValue
+        result.push( currentValue );
+
+        // take everything from temp and move back to original stack
+        while ( !temp.isEmpty() ) {
+          stack.push( temp.pop() );
+        }
+      }
+    }
+
+    return result;
+  };
 })();
