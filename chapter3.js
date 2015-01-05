@@ -185,4 +185,13 @@
 
     return result;
   };
+
+  // 3.4
+  var towersOfHanoi = function (num, start, temp, end) {
+    if ( num > 0 ) {
+      towersOfHanoi( num - 1, start, end, temp );
+      console.log( 'Move ' + num + ' from ' + start + ' to ' + end );
+      towersOfHanoi( num - 1, temp, start, end);
+    }
+  };
 })();
