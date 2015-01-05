@@ -88,4 +88,30 @@
    * to peek at, you'll have access to that stack's top position and be able to return the value
    * at that top position.
   */
+
+  // 3.2 - How would you design a stack which, in addition to push and pop, also has a function min which returns the minimum value?
+  /*
+   * The stack data structure would need to have another property called minValue that is a
+   * list data structure itself (either array or linked list). Let's assume that its a linked
+   * list.
+   *
+   * The implementation of 'push' would be modified to check whether the current value
+   * is the first value to be pushed onto the stack. If it is, then also add the value to the
+   * head of the minValue linked list. If it is not the first value to be pushed onto the stack,
+   * then for every subsequent push, check whether the value being pushed on is less than or
+   * equal to the head of the minValue linked list. If it is, then add the value to the head
+   * of the linked list.
+   *
+   * The implementation of 'pop' would be modified slightly; once the 'pop' code has determined
+   * which value to pop off, it needs to subsequently check whether the popped value is equal
+   * to the head of the minValue linked list. If it is, then remove the head value from the
+   * minValue linked list.
+   *
+   * The min function would simply return the head value of the minValue linked list. And since
+   * adding to the head and removing from the head of a linked list are both O(1) operations,
+   * both push and pop are still O(1) as well as the min function.
+  */
+
+  // 3.3
+  
 })();
