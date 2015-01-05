@@ -194,4 +194,35 @@
       towersOfHanoi( num - 1, temp, start, end);
     }
   };
+
+  var Tower = function (towerNumber) {
+    var t    = {};
+    var disk = Stack();
+    var idx  = towerNumber;
+
+    t.getIndex = function () {
+      return idx;
+    };
+
+    t.add = function (diskNum) {
+      if ( !disk.isEmpty() && disk.peek() <= diskNum ) throw new Error('Error placing disk ' + diskNum);
+      disk.push( diskNum );
+    };
+
+    t.moveTopTo = function (tower) {
+      var top = disk.pop();
+      tower.add( top );
+      console.log( 'Move disk ' + top + ' from ' + t.getIndex() + ' to ' + tower.getIndex() );
+    };
+
+    t.moveDisk = function (num, towerDestination, towerBuffer) {
+      if ( num > 0 ) {
+        t.moveDisk( num - 1, towerBuffer, towerDestination );
+        t.moveTopTo( towerDestination );
+        towerBuffer.moveDisk( num - 1, towerDestination, t);
+      }
+    };
+
+    return t;
+  };
 })();
