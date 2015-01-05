@@ -27,6 +27,9 @@
     peek: function () {
       return this.storage[ this.size - 1 ];
     },
+    getSize: function () {
+      return this.size;
+    },
     isEmpty: function () {
       return this.size === 0;
     }
@@ -113,5 +116,73 @@
   */
 
   // 3.3
-  
+  var setOfStacks = function (threshold) {
+    var result       = {};
+    var hash         = {}; // key = number, value = stack data structure
+    var indices      = []; // keep track of all indices in 'hash'
+    var numSubStacks = 0;  // keep track of number of substacks
+
+
+    result.push = function (value) {
+      var newStack;
+      // if there are no substacks or if the existing substack is at the threshold
+      if ( result.isEmpty() || hash[ indices[indices.length - 1] ].getSize() >= threshold ) {
+        // create new substack
+        newStack = Stack();
+        newStack.push( value );
+        hash[ numSubStacks ] = newStack;
+
+        indices.push( numSubStacks );
+        numSubStacks += 1;
+      } else {
+        // indices[indices.length - 1] simply returns the last index value in the indices array
+        hash[ indices[indices.length - 1] ].push( value );
+      }
+    };
+
+    result.pop = function () {
+      var currentStack, popped;
+      if ( !result.isEmpty() ) {
+        // take current stack and save the popped value
+        currentStack = hash[ indices[indices.length - 1] ];
+        popped       = currentStack.pop();
+
+        // check if current stack (once popped) is empty
+        if ( currentStack.isEmpty() ) {
+          // if empty, then delete stack from hash and decrement numSubStacks
+          // remove the last index in the indices array
+          delete hash[ indices.pop() ];
+          numSubStacks -= 1;
+        }
+
+        return popped;
+      }
+    };
+
+    result.popAt = function (idx) {
+      var specificStack, popped, spliceIdx;
+      if ( hash[ idx ] ) {
+        specificStack = hash[ idx ];
+        popped        = specificStack.pop();
+
+        if ( specificStack.isEmpty() ) {
+          // find the position of 'idx' within the indices array
+          spliceIdx = indices.indexOf( idx );
+          if ( spliceIdx === -1 ) throw new Error('Error with popAt');
+
+          indices.splice( spliceIdx, 1 ); // modifies indices in place
+          delete hash[ idx ];
+          numSubStacks -= 1;
+        }
+
+        return popped;
+      }
+    };
+
+    result.isEmpty = function () {
+      return numSubStacks === 0;
+    };
+
+    return result;
+  };
 })();
