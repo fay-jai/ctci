@@ -267,7 +267,6 @@
   // 3.6
   var sortStack = function (stack) {
     var result = Stack();
-    var temp   = Stack();
     var currentValue;
 
     while ( !stack.isEmpty() ) {
@@ -277,18 +276,14 @@
       if ( result.isEmpty() ) {
         result.push( currentValue );
       } else {
-        // take all values in result that are greater than current value and move them to temp
+        // take all values in result that are greater than current value and move them
+        // to the original stack
         while ( result.peek() > currentValue ) {
-          temp.push( result.pop() );
+          stack.push( result.pop() );
         }
 
         // at this point, result.peek() is <= currentValue
         result.push( currentValue );
-
-        // take everything from temp and move back to original stack
-        while ( !temp.isEmpty() ) {
-          stack.push( temp.pop() );
-        }
       }
     }
 
