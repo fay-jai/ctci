@@ -225,4 +225,42 @@
 
     return t;
   };
+
+  // 3.5
+  var MyQueue = function () {
+    var q      = {};
+    var inbox  = Stack();
+    var outbox = Stack();
+
+    q.enqueue = function (value) {
+      inbox.push( value );
+    };
+
+    q.dequeue = function () {
+      // pop everything out of inbox and push into outbox
+      var popped, result;
+
+      while ( !inbox.isEmpty() ) {
+        popped = inbox.pop();
+        outbox.push( popped );
+      }
+
+      // then pop from outbox and store as result
+      result = outbox.pop();
+
+      // pop everything from outbox back to inbox
+      while ( !outbox.isEmpty() ) {
+        popped = outbox.pop();
+        inbox.push( popped );
+      }
+
+      return result;
+    };
+
+    q.isEmpty = function () {
+      return inbox.isEmpty();
+    };
+
+    return q;
+  };
 })();
