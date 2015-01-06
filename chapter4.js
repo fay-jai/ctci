@@ -213,4 +213,160 @@
     result.root = createMinimalBST( sortedArray );
     return result;
   };
+
+  // 4.4
+  var makeNode = function (value) {
+    return {
+      value : value,
+      next  : null
+    };
+  };
+
+  var singlyLinkedListMethods = {
+    appendToHead: function (value) {
+      var node = makeNode( value );
+      if ( this.isEmpty() ) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        node.next = this.head;
+        this.head = node;
+      }
+    },
+    appendToTail: function (value) {
+      var node = makeNode( value );
+      if ( this.isEmpty() ) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        this.tail.next = node;
+        this.tail      = node;
+      }
+    },
+    removeFromHead: function () {
+      var remove;
+      if ( !this.isEmpty() ) {
+        remove = this.head.value;
+
+        // only one node in linked list
+        if ( this.head === this.tail ) {
+          this.head = null;
+          this.tail = null;
+        } else {
+          this.head = this.head.next;
+        }
+
+        return remove;
+      }
+    },
+    removeFromTail: function () {
+      var remove, node;
+      if ( !this.isEmpty() ) {
+        remove = this.tail.value;
+
+        if ( this.head === this.tail ) {
+          this.head = null;
+          this.tail = null;
+        } else {
+          // iterate through linked list until reaching node prior to tail
+          node = this.head;
+          while ( node.next !== this.tail ) {
+            node = node.next;
+          }
+          // remove link to previous tail
+          node.next = null;
+          this.tail = node;
+        }
+
+        return remove;
+      }
+    },
+    contains: function (value, node) {
+      // initialization logic
+      if ( node === void 0 ) node = this.head;
+
+      // base case
+      if ( node === null ) return false;
+      if ( node.value === value ) return true;
+      return this.contains( value, node.next );
+    },
+    isEmpty: function () {
+      return this.head === null && this.tail === null;
+    }
+  };
+
+  var singlyLinkedList = function () {
+    var list   = Object.create( singlyLinkedListMethods );
+    list.head  = null;
+    list.tail  = null;
+    return list;
+  };
+
+  var Queue = function () {
+    var q     = Object.create( queueMethods );
+    q.storage = {};
+    q.start   = 0;
+    q.end     = 0;
+
+    return q;
+  };
+
+  var queueMethods = {
+    enqueue: function (value) {
+      this.storage[ this.end ] = value;
+      this.end += 1;
+    },
+    dequeue: function () {
+      var removed;
+      if ( !this.isEmpty() ) {
+        removed = this.storage[ this.start ];
+        delete this.storage[ this.start ];
+        this.start += 1;
+        return removed;
+      }
+    },
+    top: function () {
+      return this.storage[ this.start ];
+    },
+    isEmpty: function () {
+      return this.start >= this.end;
+    }
+  };
+
+  var breadthFirstMap = function (node, fn) {
+    var q = Queue();
+    var removed;
+
+    // add [depth, node] to queue
+    q.enqueue( [ 0, node ] );
+
+    // while queue isn't empty
+    while ( !q.isEmpty() ) {
+      removed = q.dequeue();
+      fn( removed[0], removed[1] );
+
+      removed[0] += 1;
+
+      // if left child exists
+      if ( removed[1].left ) {
+        q.enqueue( [ removed[0], removed[1].left  ] );
+      }
+
+      // if right child exists
+      if ( removed[1].right ) {
+        q.enqueue( [ removed[0], removed[1].right ] );
+      }
+    }
+  };
+
+  var createLinkedListFromBinaryTree = function (tree) {
+    var result = {};
+    if ( !tree.isEmpty() ) {
+      breadthFirstMap(tree.root, function (depth, node) {
+        result[depth] = result[depth] || singlyLinkedList();
+        result[depth].appendToTail( node.value );
+      });
+    }
+    return result;
+  };
 })();
