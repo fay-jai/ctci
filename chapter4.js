@@ -165,4 +165,29 @@
       return true;
     }
   };
+
+  // 4.3
+  var createBinarySearchTree = function (sortedArray) {
+    var result = binarySearchTree();
+
+    var inner = function (array) {
+      var len = array.length;
+      var mid, leftArray, rightArray;
+      // base case
+      if ( len === 0 ) return;
+
+      // greater than 1
+      mid        = Math.floor( len / 2 );
+      leftArray  = array.slice(0, mid);
+      rightArray = array.slice(mid + 1);
+
+      result.insert( array[mid] );
+      inner( leftArray );
+      inner( rightArray );
+    };
+
+    inner(sortedArray);
+
+    return result;
+  };
 })();
