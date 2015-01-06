@@ -369,4 +369,22 @@
     }
     return result;
   };
+
+  // 4.5
+  var isBinarySearchTree = function (node) {
+    var left, right;
+
+    // check if left and right exist
+    if ( node.left === null && node.right === null ) return true;
+
+    if ( node.left ) {
+      left = node.left.value <= node.value ? isBinarySearchTree( node.left ) : false;
+    }
+
+    if ( node.right ) {
+      right = node.left.value > node.value ? isBinarySearchTree( node.left ) : false;
+    }
+
+    return left && right;
+  };
 })();
