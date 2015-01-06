@@ -371,20 +371,36 @@
   };
 
   // 4.5
-  var isBinarySearchTree = function (node) {
+  var isBinarySearchTree = function (node, min, max) {
     var left, right;
+    min = min || Number.MIN_VALUE;
+    max = max || Number.MAX_VALUE;
 
     // check if left and right exist
     if ( node.left === null && node.right === null ) return true;
 
+    if ( node.left && node.right ) {
+      if ( node.left.value <= node.value && node.right > node.value ) {
+        if ( node.left.value <= max && node.right.value > min ) {
+          return isBinarySearchTree( node.left, min, node.value ) &&
+                 isBinarySearchTree( node.right, node.value, max );
+        }
+      }
+      return false;
+    }
+
     if ( node.left ) {
-      left = node.left.value <= node.value ? isBinarySearchTree( node.left ) : false;
+      if ( node.left.value <= node.value && node.left.value <= max ) {
+        return isBinarySearchTree( node.left, min, node.value );
+      }
+      return false;
     }
 
     if ( node.right ) {
-      right = node.left.value > node.value ? isBinarySearchTree( node.left ) : false;
+      if ( node.right.value > node.value && node.right.value > min ) {
+        return isBinarySearchTree( node.right, node.value, max );
+      }
+      return false;
     }
-
-    return left && right;
   };
 })();
