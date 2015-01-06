@@ -144,5 +144,25 @@
   var isBalanced = function (binaryTree) {
     // a balanced tree is defined to be a tree such that the heights of the 2 subtrees
     // of any node never differ by more than one
+
+    var node, leftSubtreeHeight, rightSubtreeHeight;
+
+    if ( binaryTree.isEmpty() ) return true; // empty binary tree is balanced
+
+    node = binaryTree.root;
+    if ( node.left && node.right ) {
+      leftSubtreeHeight  = binaryTree.getHeight( node.left );
+      rightSubtreeHeight = binaryTree.getHeight( node.right );
+      return Math.abs( leftSubtreeHeight - rightSubtreeHeight ) <= 1;
+    } else if ( node.left ) {
+      leftSubtreeHeight  = binaryTree.getHeight( node.left );
+      return leftSubtreeHeight === 0;
+    } else if ( node.right ) {
+      rightSubtreeHeight = binaryTree.getHeight( node.right );
+      return rightSubtreeHeight === 0;
+    } else {
+      // leaf node
+      return true;
+    }
   };
 })();
