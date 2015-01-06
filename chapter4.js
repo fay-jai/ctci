@@ -190,4 +190,27 @@
 
     return result;
   };
+
+  // alternative to 4.3
+  var createMinimalBST = function (array) {
+    if ( array.length === 0 ) return null;
+
+    var mid   = Math.floor( array.length / 2 );
+    var left  = array.slice(0, mid);
+    var right = array.slice(mid + 1);
+
+    var tNode   = binaryTreeNode( array[mid] );
+    tNode.left  = createMinimalBST( left );
+    tNode.right = createMinimalBST( right );
+
+    return tNode;
+  };
+
+  createBinarySearchTree = function (sortedArray) {
+    var result = binarySearchTree();
+    if ( sortedArray.length === 0 ) return result;
+
+    result.root = createMinimalBST( sortedArray );
+    return result;
+  };
 })();
