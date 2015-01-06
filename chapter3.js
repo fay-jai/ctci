@@ -289,4 +289,50 @@
 
     return result;
   };
+
+  // 3.7
+  var animalShelter = function () {
+    var obj    = {};
+    var dog    = Queue();
+    var cat    = Queue();
+    var order  = 0; // the trick is to add an order for each of the animal objects
+
+    obj.enqueue = function (type, name) {
+      var node = Animal(type, name);
+
+      if ( type === 'dog' ) {
+        dog.enqueue( [order, node] );
+      } else {
+        cat.enqueue( [order, node] );
+      }
+
+      order += 1;
+    };
+
+    obj.dequeueAny = function () {
+      if ( !dog.isEmpty() && cat.isEmpty() ) {
+        return obj.dequeueDog();
+      } else if ( dog.isEmpty() && !cat.isEmpty() ) {
+        return obj.dequeueCat();
+      } else if ( !dog.isEmpty() && !cat.isEmpty() ) {
+        return dog.peek()[0] < cat.peek()[0] ? obj.dequeueDog() : obj.dequeueCat();
+      }
+    };
+
+    obj.dequeueDog = function () {
+      var removed = dog.dequeue();
+      if ( removed ) return removed[1];
+    };
+
+    obj.dequeueCat = function () {
+      var removed = cat.dequeue();
+      if ( removed ) return removed[1];
+    };
+
+    return obj;
+  };
+
+  var Animal = function (type, name) {
+    return { type: type, name: name, next: null };
+  };
 })();
