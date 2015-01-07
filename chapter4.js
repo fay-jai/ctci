@@ -44,7 +44,7 @@
       }
     },
     remove: function (value, node) {
-      var nextRightValue, nextLeftValue, minRight;
+      var minRight;
 
       if ( !this.isEmpty() ) {
         // initialize node
@@ -53,9 +53,7 @@
         // compare the node's value with the value
         if ( value < node.value ) {
           // check if there is a left node
-          if ( node.left ) {
-            node.left = this.remove( value, node.left );
-          }
+          if ( node.left ) node.left = this.remove( value, node.left );
         } else if ( value > node.value ) {
           // check if there is a right node
           if ( node.right ) {
@@ -73,13 +71,9 @@
               node = null;
             }
           } else if ( node.left === null ) {
-            nextRightValue = node.right.value;
-            node.value     = nextRightValue;
-            node.right     = this.remove( nextRightValue, node.right );
+            node = node.right;
           } else if ( node.right === null ) {
-            nextLeftValue  = node.left.value;
-            node.value     = nextLeftValue;
-            node.left      = this.remove( nextLeftValue, node.left );
+            node = node.left;
           } else {
             // node has both left and right
             minRight   = this.findMinValue( node.right );
