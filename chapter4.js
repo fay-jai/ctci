@@ -43,46 +43,23 @@
         }
       }
     },
-    remove: function (value, node) {
-      var minRight;
-
-      if ( !this.isEmpty() ) {
-        // initialize node
-        if ( node === void 0 ) node = this.root;
-
-        // compare the node's value with the value
-        if ( value < node.value ) {
-          // check if there is a left node
-          if ( node.left ) node.left = this.remove( value, node.left );
-        } else if ( value > node.value ) {
-          // check if there is a right node
-          if ( node.right ) {
-            node.right = this.remove( value, node.right );
-          }
-        } else {
-          // at this point, value === node.value
-          // check if node is a leaf node
-          if ( node.left === null && node.right === null ) {
-            // edge case of single node in tree (i.e. root node)
-            if ( this.getHeight() === 0 ) {
-              this.root = null;
-              return this.root;
-            } else {
-              node = null;
-            }
-          } else if ( node.left === null ) {
-            node = node.right;
-          } else if ( node.right === null ) {
-            node = node.left;
+    remove: function (value) {
+      this.root = this._removeInner( value, this.root );
+    },
+    _removeInner: function (value, node) {
+      if ( node ) {
+          if ( value < node.value ) {
+              node.left = this._removeInner( value, node.left );
+          } else if ( value > node.value ) {
+              node.right = this._removeInner( value, node.right );
+          } else if ( node.left && node.right ) {
+              node.value = this.findMinValue( node.right );
+              node.right = this._removeInner( node.value, node.right );
           } else {
-            // node has both left and right
-            minRight   = this.findMinValue( node.right );
-            node.value = minRight;
-            node.right = this.remove( minRight, node.right );
+              node = node.left || node.right;
           }
-        }
-        return node;
       }
+      return node;
     },
     contains: function (value, node) {
       if ( this.isEmpty() ) return false;
