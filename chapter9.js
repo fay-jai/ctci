@@ -36,4 +36,18 @@
       return cache['' + x + ',' + y];
     };
   })();
+
+  // 9.3
+  var magicIndex = function (array) {
+    if (array.length === 0) return null;
+
+    var len = array.length;
+    var i;
+
+    for (i = 0; i < len; i += 1) {
+      if (array[i] === i) return i;
+    }
+
+    return null;
+  };
 })();
