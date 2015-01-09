@@ -95,4 +95,36 @@
 
     return result;
   };
+
+  // 9.6
+  var generateNPairsParens = function (n) {
+    var opening = '(';
+    var paren   = '()';
+    var result  = {};
+    var i, j, current, character, before, rest;
+
+    if (n === 0) return [];
+    if (n === 1) return Object.keys( {'()': true} );
+
+    var nMinusOne = generateNPairsParens( n - 1 );
+
+    // for each string item in nMinusOne:
+    for (i = 0; i < nMinusOne.length; i += 1) {
+      current = nMinusOne[i];
+      // for each string char:
+      for (j = 0; j < current.length; j += 1) {
+        character = current[j];
+        // if the current character is opening, then do: char + paren + remaining chars in string
+        if (character === opening) {
+          before = current.slice(0, j + 1);
+          rest   = current.slice(j + 1);
+          result[ before + ' ' + paren  + ' ' + rest ] = true;
+        }
+      }
+    }
+
+    // concat string with paren
+    result[ current + ' ' + paren ] = true; // ex. '()' + '()'
+    return Object.keys( result );
+  };
 })();
