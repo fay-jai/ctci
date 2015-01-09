@@ -172,4 +172,28 @@
   // var p22 = new Point(2, 2, 'black');
   // var m = [[p00, p01, p02], [p10, p11, p12], [p20, p21, p22]];
   // fillPaint(m, p11, 'white');
+
+  // 9.8
+  var getAvailableCoins = function (num) {
+    var coins = [25, 10, 5, 1];
+    return coins.filter(function (n) {
+      return n <= num;
+    });
+  };
+
+  var numWaysToGetNCents = function (num) {
+    var inner = function (n, allowedCoins) {
+      if (n  <  0) return 0;
+      if (n === 0) return 1;
+      var result = 0;
+
+      allowedCoins.forEach(function (coin) {
+        result += inner( n - coin, getAvailableCoins(coin) );
+      });
+
+      return result;
+    };
+
+    return inner( num, getAvailableCoins(num) );
+  };
 })();
