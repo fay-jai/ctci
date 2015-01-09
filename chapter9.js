@@ -127,4 +127,49 @@
     result[ current + ' ' + paren ] = true; // ex. '()' + '()'
     return Object.keys( result );
   };
+
+  // 9.7
+  var Point = function (x, y, color) {
+    this.x     = x;
+    this.y     = y;
+    this.color = color;
+  };
+
+  var fillPaint = function (matrix, point, targetColor) {
+    // matrix = array of array of Points (inner array for each x value)
+    // point = new Point(x, y, color);
+    // targetColor = 'string'
+
+    // initialization
+    var numRows = matrix.length;
+    var numCols = matrix[0].length;
+    var above, below, left, right;
+
+    // base cases
+    if (point.x < 0 || point.x >= numRows ) return;
+    if (point.y < 0 || point.y >= numCols ) return;
+
+    point.color = targetColor;
+    above = matrix[point.x][point.y - 1];
+    below = matrix[point.x][point.y + 1];
+    left  = matrix[point.x - 1] && matrix[point.x - 1][point.y]; // to check whether the row exists
+    right = matrix[point.x + 1] && matrix[point.x + 1][point.y];
+
+    if (above) fillPaint( matrix, above, targetColor );
+    if (below) fillPaint( matrix, below, targetColor );
+    if (left ) fillPaint( matrix, left,  targetColor );
+    if (right) fillPaint( matrix, right, targetColor );
+  };
+
+  // var p00 = new Point(0, 0, 'black');
+  // var p01 = new Point(0, 1, 'black');
+  // var p02 = new Point(0, 2, 'black');
+  // var p10 = new Point(1, 0, 'black');
+  // var p11 = new Point(1, 1, 'black');
+  // var p12 = new Point(1, 2, 'black');
+  // var p20 = new Point(2, 0, 'black');
+  // var p21 = new Point(2, 1, 'black');
+  // var p22 = new Point(2, 2, 'black');
+  // var m = [[p00, p01, p02], [p10, p11, p12], [p20, p21, p22]];
+  // fillPaint(m, p11, 'white');
 })();
