@@ -55,10 +55,8 @@
   var createAllSubsets = function (array) {
     // base case
     var len = array.length;
-    // if the array is length 0, then there are no subsets
-    if (len === 0) return [];
-    // if the array is length 1, then there is only 1 subset (the array itself)
-    if (len === 1) return [ array ];
+    // if the array length is 0 or 1, return the array itself
+    if (len < 2) return [ array ];
 
     var result = [];
     var head   = array.slice(0, len - 1);
@@ -76,6 +74,25 @@
 
     // add the last element onto the result by itself
     result.push( last );
+    return result;
+  };
+
+  // 9.5
+  var createAllPermutations = function (array) {
+    var result = [];
+    var other;
+
+    // base case
+    if (array.length < 2) return [ array ];
+
+    array.forEach(function (element, idx) {
+      other = array.slice(0, idx).concat( array.slice(idx + 1) );
+      // recursive call to generate previous permutations
+      createAllPermutations( other ).forEach(function (arr) {
+        result.push( [ element ].concat(arr) );
+      });
+    });
+
     return result;
   };
 })();
