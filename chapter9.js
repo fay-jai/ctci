@@ -50,4 +50,32 @@
 
     return null;
   };
+
+  // 9.4
+  var createAllSubsets = function (array) {
+    // base case
+    var len = array.length;
+    // if the array is length 0, then there are no subsets
+    if (len === 0) return [];
+    // if the array is length 1, then there is only 1 subset (the array itself)
+    if (len === 1) return [ array ];
+
+    var result = [];
+    var head   = array.slice(0, len - 1);
+    var last   = array.slice(len - 1);
+
+    // recursive case
+    var allSubsetsSoFar = createAllSubsets( head );
+
+    allSubsetsSoFar.forEach(function (arr) {
+      // for each arr in allSubsetsSoFar, push a copy of arr without the last value
+      // and a copy with the last value
+      result.push( arr );
+      result.push( arr.concat(last) );
+    });
+
+    // add the last element onto the result by itself
+    result.push( last );
+    return result;
+  };
 })();
