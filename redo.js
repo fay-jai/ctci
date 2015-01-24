@@ -76,3 +76,54 @@ var transformMatrix = function (matrix) {
 
   return matrix;
 };
+
+// 2.1
+
+var removeDuplicates = function (linkedList) {
+  if (linkedList.isEmpty()) {
+    return linkedList;
+  } else {
+    var current = linkedList.head; // node
+    var hash    = {};
+
+    // reset linked list to 'empty'
+    linkedList.head = null;
+    linkedList.tail = null;
+
+    // O(n)
+    while (current !== null) {
+      if (!hash[ current.value ]) {
+        linkedList.appendToTail( current.value ); // O(n) operation if singly linked list and O(1) operation if doubly linked list
+        hash[ current.value ] = true;
+      }
+      current = current.next;
+    }
+
+    return linkedList;
+  }
+};
+
+removeDuplicates = function (linkedList) {
+  if (linkedList.isEmpty() || linkedList.head === linkedList.tail) return linkedList;
+
+  // linkedList has at least 2 nodes
+  var inner = function (searchValue, prev, curr) {
+    if (!curr) return;
+
+    if (curr.value === searchValue) {
+      prev.next = curr.next;
+      curr      = prev.next;
+      inner(searchValue, prev, curr);
+    } else {
+      inner(searchValue, prev.next, curr.next);
+    }
+  };
+
+  var pointer = linkedList.head;
+  while (pointer) {
+    inner( pointer.value, pointer, pointer.next );
+    pointer = pointer.next;
+  }
+
+  return linkedList;
+};
