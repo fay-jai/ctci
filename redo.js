@@ -78,7 +78,6 @@ var transformMatrix = function (matrix) {
 };
 
 // 2.1
-
 var removeDuplicates = function (linkedList) {
   if (linkedList.isEmpty()) {
     return linkedList;
@@ -123,6 +122,56 @@ removeDuplicates = function (linkedList) {
   while (pointer) {
     inner( pointer.value, pointer, pointer.next );
     pointer = pointer.next;
+  }
+
+  return linkedList;
+};
+
+// 2.4
+var partitionLinkedList = function (linkedList, x) {
+  if (linkedList.isEmpty()) return linkedList;
+
+  var pointer = linkedList.head;
+  var start, end, startRunner, endRunner;
+
+  // reset linked list
+  linkedList.head = null;
+  linkedList.tail = null;
+
+  while (pointer) {
+    if (pointer.value < x) {
+      // add to start and update startRunner
+      if (start) {
+        startRunner.next = pointer;
+        startRunner      = pointer;
+      } else {
+        start       = pointer;
+        startRunner = pointer;
+      }
+    } else {
+      // add to tail and update tailRunner
+      if (end) {
+        endRunner.next = pointer;
+        endRunner      = pointer;
+      } else {
+        end       = pointer;
+        endRunner = pointer;
+      }
+    }
+    pointer = pointer.next;
+  }
+
+  // merge start and tail together
+  if (start && end) {
+    startRunner.next = end;
+    linkedList.head  = start;
+    linkedList.tail  = endRunner;
+  } else if (start) {
+    linkedList.head = end;
+    linkedList.tail = endRunner;
+  } else {
+    linkedList.head = start;
+    linkedList.tail = startRunner;
   }
 
   return linkedList;
