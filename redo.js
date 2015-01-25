@@ -261,3 +261,102 @@ var minStackMethods = {
     return this.size;
   }
 };
+
+// 3.3
+var Stack = function () {
+  var obj     = Object.create( StackMethods );
+  obj.storage = {};
+  obj.size    = 0;
+  return obj;
+};
+
+var StackMethods = {
+  push: function (value) {
+    this.storage[ this.size ] = value;
+    this.size += 1;
+  },
+  pop: function () {
+    if (this.size > 0) {
+      var remove = this.storage[ this.size - 1 ];
+      delete this.storage[ this.size - 1 ];
+      this.size -= 1;
+      return remove;
+    }
+  },
+  peek: function () {
+    return this.storage[ this.size - 1 ];
+  },
+  getSize: function () {
+    return this.size;
+  }
+};
+
+var setOfStacks = function (capacity) {
+  var obj      = Object.create( setOfStackMethods );
+  obj.storage  = {};
+  obj.size     = 0;
+  obj.capacity = capacity;
+  return obj;
+};
+
+var setOfStackMethods = {
+  push: function (value) {
+    var topStack;
+    if (this.size === 0) {
+      topStack = Stack();
+      topStack.push(value);
+      this.storage[ this.size ] = topStack;
+      this.size += 1;
+    } else {
+      topStack = this.storage[ this.size - 1 ];
+
+      // check if topStack is not at capacity
+      if (topStack.getSize() < this.capacity) {
+        topStack.push(value);
+      } else {
+        topStack = Stack();
+        topStack.push(value);
+        this.storage[ this.size ] = topStack;
+        this.size += 1;
+      }
+    }
+  },
+  pop: function () {
+    if (this.size > 0) {
+      var topStack = this.storage[ this.size - 1 ];
+      var remove = topStack.pop();
+
+      // check if topStack is empty
+      if (topStack.getSize() === 0) {
+        delete this.storage[ this.size - 1 ];
+        this.size -= 1;
+      }
+
+      return remove;
+    }
+  },
+  popAt: function (idx) {
+    if (idx >= 0 && idx < this.size) {
+      var idxStack = this.storage[ idx ];
+      var remove = idxStack.pop();
+
+      if (idxStack.getSize() === 0) {
+        while (idx < this.size) {
+          this.storage[ idx ] = this.storage[ idx + 1 ];
+          idx += 1;
+        }
+        this.size -= 1;
+        delete this.storage[ this.size ];
+      }
+
+      return remove;
+    }
+  },
+  peek: function () {
+    var topStack = this.storage[ this.size - 1 ];
+    return topStack.peek();
+  },
+  getSize: function () {
+    return this.size;
+  }
+};
