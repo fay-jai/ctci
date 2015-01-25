@@ -211,3 +211,53 @@ var isPalindrome = function (linkedList) {
   if (first !== last)  return false;
   return isPalindrome( linkedList );
 };
+
+// 3.2
+var minStack = function () {
+  var obj     = Object.create( minStackMethods );
+  obj.storage = {};
+  obj.size    = 0;
+
+  obj.minStorage = {};
+  obj.minTop     = 0;
+
+  return obj;
+};
+
+var minStackMethods = {
+  push: function (value) {
+    // add to storage
+    this.storage[ this.size ] = value;
+    this.size += 1;
+
+    // add to minStorage if the value is less than the current min
+    if (this.minTop === 0 || value <= this.minStorage[ this.minTop - 1 ]) {
+      this.minStorage[ this.minTop ] = value;
+      this.minTop += 1;
+    }
+  },
+  pop: function () {
+    if (this.size > 0) {
+      var remove = this.storage[ this.size - 1 ];
+      delete this.storage[ this.size - 1 ];
+      this.size -= 1;
+
+      // check if value removed is the current minValue
+      if (remove === this.minStorage[ this.minTop - 1 ]) {
+        delete this.minStorage[ this.minTop - 1 ];
+        this.minTop -= 1;
+      }
+
+      return remove;
+    }
+  },
+  peek: function () {
+    return this.storage[ this.size - 1 ];
+  },
+  min: function () {
+    return this.minStorage[ this.minTop - 1 ];
+  },
+  getSize: function () {
+    return this.size;
+  }
+};
