@@ -176,3 +176,26 @@ var partitionLinkedList = function (linkedList, x) {
 
   return linkedList;
 };
+
+var sumLinkedLists = function(list1, list2) {
+  if (list1.isEmpty() && list2.isEmpty()) return null;
+  var total = 0;
+  var base  = 1;
+
+  while (!list1.isEmpty() && !list2.isEmpty()) {
+    total += (list1.removeFromHead() + list2.removeFromHead()) * base;
+    base *= 10;
+  }
+
+  while (!list1.isEmpty()) {
+    total += list1.removeFromHead() * base;
+    base *= 10;
+  }
+
+  while (!list2.isEmpty()) {
+    total += list2.removeFromHead() * base;
+    base *= 10;
+  }
+
+  return total;
+};
