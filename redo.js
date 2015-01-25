@@ -199,3 +199,15 @@ var sumLinkedLists = function(list1, list2) {
 
   return total;
 };
+
+//2.7
+var isPalindrome = function (linkedList) {
+  if (linkedList.isEmpty()) return true;
+
+  var first = linkedList.removeFromHead();
+  var last  = linkedList.removeFromTail();
+
+  if (!first || !last) return true;
+  if (first !== last)  return false;
+  return isPalindrome( linkedList );
+};
