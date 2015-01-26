@@ -480,3 +480,31 @@ AnimalShelter.prototype.dequeueCat = function () {
     return this.catQueue.removeFromHead();
   }
 };
+
+// 4.3
+var createBinarySearchTree = function (sortedArray) {
+  var inner = function (node, array) {
+    var len = array.length;
+    if (len === 0) return null;
+    if (len === 1) {
+      node.value = array[0];
+      return node;
+    }
+
+    var mid   = Math.floor( len / 2 );
+    var left  = array.slice(0, mid);
+    var right = array.slice(mid + 1);
+
+    node.value = array[mid];
+    node.left  = inner(new BSTNode(), left);
+    node.right = inner(new BSTNode(), right);
+    return node;
+  };
+
+  return inner( new BSTNode(), sortedArray );
+};
+
+var BSTNode = function () {
+  this.left  = null;
+  this.right = null;
+};
