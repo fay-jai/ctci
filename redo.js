@@ -508,3 +508,29 @@ var BSTNode = function () {
   this.left  = null;
   this.right = null;
 };
+
+// 4.4
+var linkedListDepth = function (node) {
+  var q    = Queue();
+  var linkedListHash = {};
+  var current;
+
+  q.enqueue( [ node, 0 ] );
+
+  while (!q.isEmpty()) {
+    current = q.dequeue();
+    linkedListHash[ current[1] ] = linkedListHash[ current[1] ] || linkedList();
+
+    linkedListHash[ current[1] ].addToTail( current );
+
+    if (current[0].left) {
+      q.enqueue( [current[0].left, current[1] + 1] );
+    }
+
+    if (current[0].right) {
+      q.enqueue( [current[0].right, current[1] + 1] );
+    }
+  }
+
+  return linkedListHash;
+};
