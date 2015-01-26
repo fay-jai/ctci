@@ -534,3 +534,16 @@ var linkedListDepth = function (node) {
 
   return linkedListHash;
 };
+
+// 4.5
+var isBinaryTree = function (node) {
+  var inner = function (node, min, max) {
+    if (!node) return true;
+    if (min <= node.value && node.value < max) {
+      return inner(node.left, min, node.value) && inner(node.right, node.value, max);
+    }
+    return false;
+  };
+
+  return inner(node, Math.MIN_VALUE, Math.MAX_VALUE);
+};
