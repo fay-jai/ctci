@@ -361,6 +361,49 @@ var setOfStackMethods = {
   }
 };
 
+// 3.5
+var myQueue = function () {
+  var obj    = Object.create( myQueueMethods );
+  obj.input  = Stack();
+  obj.output = Stack();
+  return obj;
+};
+
+var myQueueMethods = {
+  enqueue: function (value) {
+    this.input.push(value);
+  },
+  dequeue: function () {
+    while (this.input.getSize() > 0) {
+      this.output.push( this.input.pop() );
+    }
+
+    var remove = this.output.pop();
+
+    while (this.output.getSize() > 0) {
+      this.input.push( this.output.pop() );
+    }
+
+    return remove;
+  },
+  top: function () {
+    while (this.input.getSize() > 0) {
+      this.output.push( this.input.pop() );
+    }
+
+    var peek = this.output.peek();
+
+    while (this.output.getSize() > 0) {
+      this.input.push( this.output.pop() );
+    }
+
+    return peek;
+  },
+  getSize: function () {
+    return this.input.getSize();
+  }
+};
+
 // 3.6
 var sortStack = function (stack) {
   var result = Stack();
@@ -381,3 +424,4 @@ var sortStack = function (stack) {
 
   return result;
 };
+
