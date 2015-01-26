@@ -360,3 +360,24 @@ var setOfStackMethods = {
     return this.size;
   }
 };
+
+// 3.6
+var sortStack = function (stack) {
+  var result = Stack();
+  var top;
+
+  while (stack.getSize() > 0) {
+    top = stack.pop();
+
+    if (result.getSize() === 0) {
+      result.push( top );
+    } else {
+      while (result.peek() > top && result.getSize() > 0) {
+        stack.push( result.pop() );
+      }
+      result.push( top );
+    }
+  }
+
+  return result;
+};
