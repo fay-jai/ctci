@@ -425,3 +425,58 @@ var sortStack = function (stack) {
   return result;
 };
 
+// 3.7
+var Dog = function (name) {
+  this.name = name;
+  this.type = 'dog';
+};
+
+var Cat = function (name) {
+  this.name = name;
+  this.type = 'cat';
+};
+
+var Node = function (animal, counter) {
+  this.value   = animal;
+  this.counter = counter;
+};
+
+var AnimalShelter = function () {
+  this.counter = 0;
+  this.dogQueue = linkedList();
+  this.catQueue = linkedList();
+};
+
+AnimalShelter.prototype.enqueue = function (animal) {
+  var animalNode = new Node(animal, this.counter);
+  this.counter += 1;
+
+  if (animal.type === 'dog') {
+    this.dogQueue.addToTail( animalNode );
+  } else {
+    this.catQueue.addToTail( animalNode );
+  }
+};
+
+AnimalShelter.prototype.dequeueAny = function () {
+  if (!this.dogQueue.isEmpty() && !this.catQueue.isEmpty()) {
+    return (this.dogQueue.head.counter < this.catQueue.head.counter) ?
+      this.dequeueDog() : this.dequeueCat();
+  } else if (!this.dogQueue.isEmpty()) {
+    return this.dequeueDog();
+  } else if (!this.catQueue.isEmpty()) {
+    return this.dequeueCat();
+  }
+};
+
+AnimalShelter.prototype.dequeueDog = function () {
+  if (!this.dogQueue.isEmpty()) {
+    return this.dogQueue.removeFromHead();
+  }
+};
+
+AnimalShelter.prototype.dequeueCat = function () {
+  if (!this.catQueue.isEmpty()) {
+    return this.catQueue.removeFromHead();
+  }
+};
