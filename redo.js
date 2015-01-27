@@ -547,3 +547,73 @@ var isBinaryTree = function (node) {
 
   return inner(node, Math.MIN_VALUE, Math.MAX_VALUE);
 };
+
+// 4.7
+var getAncestors = function (node, end) {
+  var found  = false;
+  var result = [];
+
+  var inner = function (node) {
+    if (!node) return;
+    if (node.value === end.value) {
+      found = true;
+    }
+
+    result.push( node.value );
+    if (found) return;
+
+    inner(node.left);
+    if (found) return;
+
+    inner(node.right);
+    if (found) return;
+
+    result.pop();
+  };
+  inner(node);
+
+  return result;
+};
+
+// 4.9
+var allSums = function (node) {
+  var inner = function (node, string, total, result) {
+    if (!node) return;
+    var key   = string !== '' ? string + ' + ' + node.value : '' + node.value;
+    var value = total + node.value;
+
+    result[key] = value;
+    inner(node.left , key, value, result);
+    inner(node.right, key, value, result);
+    return result;
+  };
+  return inner(node, '', 0, {});
+};
+
+var depthFirstMap = function (node, fn) {
+  var result = [];
+  if (!node) return [];
+  result.push( fn(node) );
+  result = result.concat(depthFirstMap(node.left, fn));
+  result = result.concat(depthFirstMap(node.right, fn));
+  return result;
+};
+
+var computeAllTreeSums = function (node, value) {
+  var result = {};
+
+  var obj = depthFirstMap(node, allSums).reduce(function (acc, cur) {
+    for (var prop in cur) {
+      acc[prop] = cur[prop];
+    }
+    return acc;
+  }, {});
+
+  for (var prop in obj) {
+    if (obj[prop] === value) {
+      result[prop] = value;
+    }
+  }
+
+  return result;
+};
