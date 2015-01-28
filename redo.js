@@ -634,3 +634,15 @@ var numSteps = (function () {
     return cache[n];
   };
 })();
+
+// 9.2
+var robotPath = function (x, y) {
+  var inner = function (curX, curY) {
+    if (curX < 0 || curY < 0 || curX > x || curY > y) return 0;
+    if (curX === x && curY === y) return 1;
+
+    return inner(curX + 1, curY) + inner(curX, curY + 1);
+  };
+
+  return inner(0, 0);
+};
