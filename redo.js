@@ -646,3 +646,22 @@ var robotPath = function (x, y) {
 
   return inner(0, 0);
 };
+
+// 9.4
+var allSubsets = function (array) {
+  var len = array.length;
+  if (len === 0) return array;
+  if (len === 1) return [ array ];
+
+  var result   = [];
+  var first    = array.slice(0, 1);
+  var rest     = array.slice(1);
+
+  allSubsets( rest ).forEach(function (arr) {
+    result.push( arr );
+    result.push( first.concat(arr) );
+  });
+  result.push( first );
+
+  return result;
+};
