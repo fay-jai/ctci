@@ -617,3 +617,20 @@ var computeAllTreeSums = function (node, value) {
 
   return result;
 };
+
+// 9.1
+var numSteps = (function () {
+  var cache = {};
+  return function (n) {
+    var total = 0;
+
+    if (n  <  0)  return 0;
+    if (n === 0)  return 1;
+    if (cache[n]) return cache[n];
+
+    total    = numSteps(n - 1) + numSteps(n - 2) + numSteps(n - 3);
+    cache[n] = total;
+
+    return cache[n];
+  };
+})();
