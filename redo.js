@@ -665,3 +665,23 @@ var allSubsets = function (array) {
 
   return result;
 };
+
+// 9.5
+var allPermutations = function (string) {
+  var len    = string.length;
+  var result, firstChar, restChar, i;
+
+  if (len === 0) return [''];
+  if (len === 1) return [[ string ]];
+
+  result = [];
+  for (i = 0; i < len; i += 1) {
+    firstChar = string[i];
+    restChar  = string.slice(0, i) + string.slice(i + 1);
+    allPermutations( restChar ).forEach(function (str) {
+      result.push( firstChar + str );
+    });
+  }
+
+  return result;
+};
