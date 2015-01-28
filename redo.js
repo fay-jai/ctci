@@ -708,3 +708,23 @@ var nPairsParens = function (num) {
 
   return Object.keys(result);
 };
+
+// 9.8
+var nCoins = function (cents) {
+  var inner = function (cents, availCoins) {
+    if (cents  <  0) return 0;
+    if (cents === 0) return 1;
+
+    return availCoins.reduce(function (acc, cur) {
+      return acc + inner( cents - cur, availableCoins(cur) );
+    }, 0);
+  };
+
+  return inner(cents, availableCoins(cents));
+};
+
+var availableCoins = function (amt) {
+  return [25, 10, 5, 1].filter(function (num) {
+    return amt >= num;
+  });
+};
