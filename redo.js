@@ -685,3 +685,26 @@ var allPermutations = function (string) {
 
   return result;
 };
+
+// 9.6
+var nPairsParens = function (num) {
+  var result = {};
+  if (num  <= 0) return [];
+  if (num === 1) return ['()'];
+
+  nPairsParens( num - 1 ).forEach(function (string) {
+    var len = string.length;
+    var newString, i;
+
+    for (i = 0; i < len; i += 1) {
+      if (string[i] === '(') {
+        newString = string.slice(0, i + 1) + '()' + string.slice(i + 1);
+        result[ newString ] = true;
+      }
+    }
+    newString = string + '()';
+    result[ newString ] = true;
+  });
+
+  return Object.keys(result);
+};
